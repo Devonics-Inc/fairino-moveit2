@@ -12,12 +12,15 @@ To confirm that you have the proper os version you can use the following command
 lsb_release -a
 ```
 <p align="center">
-  <img src="assets/upre.png" width="400"/>
+  ![alt text](image.png)
 </p>
+
+
 
 
 - ROS 2 Humble installed
 The following command would allow you to confirm that MoveIt2 
+
 ```bash
 echo $ROS_DISTRO
 ```
@@ -26,3 +29,4 @@ echo $ROS_DISTRO
   <img src="assets/rosVersion.png" width="400"/>
 </p>
 
+- Install Moveit2 
