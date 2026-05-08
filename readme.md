@@ -4,7 +4,7 @@ This repository contains multiple standalone tutorials demonstrating how to inte
 
 The project is organized into separate tutorials so each integration workflow can be followed independently depending on your application requirements.
 
-
+![Demo of MoveIt2 integration](assets/demo.gif)
 # Tutorials Overview
 
 ## 1. moveit/
