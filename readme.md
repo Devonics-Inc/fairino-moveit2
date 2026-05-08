@@ -10,7 +10,6 @@ The project is organized into separate tutorials so each integration workflow ca
     <td><img src="assets/ppwo.gif" width="250"/></td>
     <td><img src="assets/papoc.gif" width="250"/></td>
 
-
   </tr>
 </table>
 
