@@ -157,9 +157,8 @@ This will start RViz2 with the Fairino FR5 MoveIt2 configuration and allow you t
 
 
 
-### Note:
-
-You MUST source your environment in every new terminal session before running the demo
+> **Note:**  
+> You MUST source your environment in every new terminal session before running the demo
 ```bash
 source /opt/ros/humble/setup.bash
 source ~/path/to/fairino/plugin/install/setup.bash
