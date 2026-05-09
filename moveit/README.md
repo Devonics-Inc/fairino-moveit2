@@ -1,8 +1,8 @@
-# Fairino MoveIt2
+# Fairino Model MoveIt2
 
-In this tutorial, we focus on the installation and setup of a basic MoveIt2 environment using the FR5 gripper.
+In this tutorial, we focus on the installation and setup of a basic MoveIt2 environment using the FR5 cobot.
 
-By the end of this tutorial, you should have a solid understanding of MoveIt2, its configuration workflow, and how to launch a functional planning environment without integrating a real cobot or simulator.
+By the end of this tutorial, you should have a solid understanding of MoveIt2, and how to launch a functional planning environment without integrating a real cobot or simulator.
 
 <p align="center">
   <img src="assets/miqs.gif" width="600"/>
