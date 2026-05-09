@@ -33,12 +33,41 @@ mkdir configured-fr-ws
 ```
 In the same directory, make a new folder, this will be the workspace holding the new configuration to integrate moveit with the actual cobot.
 
-
-
 <p align="center">
   <img src="assets/folder.png" width="600"/>
 </p>
 
 
 
+Now you can move into the configured-fr-ws and make a src subfolder and then copy the configuration file from the original plugin into the src file 
+
+```bash
+# Go to the frcobot_ros2 repository
+cd ~/path/to/plugin/frcobot_ros2
+```
+
+```bash
+# Copy the MoveIt config package into your configured workspace src folder
+cp -r fairino5_v6_moveit2_config ../configured-fr-ws/src/
+cp -r fairino_description ../configured-fr-ws/src/
+
+```
+
+Now we move to the configured-fr-ws and build the configuration files.
+
+```bash
+cd ~/path/to/configured-fr-ws
+
+```
+
+```bash
+colcon build
+source install/setup.bash
+```
+
+inside the same directory we can run the moveit configuration tool by running the following command
+
+```bash
+ros2 launch moveit_setup_assistant setup_assistant.launch.py
+```
 
