@@ -1,4 +1,4 @@
-# Fairino Model MoveIt2
+# Getting Started with the Fairino MoveIt2 Plugin
 
 In this tutorial, we focus on the installation and setup of a basic MoveIt2 environment using the FR5 cobot.
 

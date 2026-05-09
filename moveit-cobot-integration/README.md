@@ -16,3 +16,29 @@ This setup provides a flexible framework for developing safe and intelligent rob
 # 1. Prerequisites
 
 Before starting this tutorial, make sure you have successfully completed the base MoveIt2 setup tutorial and verified that your Fairino robot environment is functioning correctly.
+
+
+
+# 2. Configuration Steps
+
+At this stage, you can either copy the source files into a separate workspace or continue using the existing plugin workspace. If you want to preserve the original tutorial setup, it is recommended to create a backup copy before making any modifications.
+
+Next, navigate to the ROS2 plugin repository corresponding to your Fairino cobot model. Use the path below to access the configuration source files:
+
+
+```bash
+cd ~/path/to/plugin/frcobot_ros2
+cd ../
+mkdir configured-fr-ws
+```
+In the same directory, make a new folder, this will be the workspace holding the new configuration to integrate moveit with the actual cobot.
+
+
+
+<p align="center">
+  <img src="assets/folder.png" width="600"/>
+</p>
+
+
+
+
