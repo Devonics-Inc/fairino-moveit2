@@ -6,32 +6,39 @@ By following this guide, you will learn how to:
 
 - Configure the Fairino robot for MoveIt2
 - Launch and visualize the robot using RViz2
-- Perform motion planning and trajectory execution
 - Enable obstacle-aware path planning
-- Simulate and test robot movements before deployment
-- Build a foundation for integrating grippers, sensors, and custom applications
 
 This setup provides a flexible framework for developing safe and intelligent robotic applications using ROS2 and MoveIt2.
 
+
+<p align="center">
+  <img src="assets/MoveitAndFR.gif" width="600"/>
+</p>
+
+
 # 1. Prerequisites
 
-Before starting this tutorial, make sure you have successfully completed the base MoveIt2 setup tutorial and verified that your Fairino robot environment is functioning correctly.
+Before starting this tutorial, make sure you have successfully completed the **Getting Started with the Fairino MoveIt2 Plugin** tutorial.
 
+You can still follow this guide without completing the previous tutorial, but you will need to manually clone the Fairino ROS2 repository using the following command:
 
+```bash
+git clone https://github.com/FAIR-INNOVATION/frcobot_ros2.git
+```
 
-# 2. Configuration Steps
+# 2. Prepare Configuration Files
 
-At this stage, you can either copy the source files into a separate workspace or continue using the existing plugin workspace. If you want to preserve the original tutorial setup, it is recommended to create a backup copy before making any modifications.
+Before starting this section, you can either copy the source files into a separate workspace or continue using the existing plugin workspace. If you want to preserve the original tutorial setup.
 
-Next, navigate to the ROS2 plugin repository corresponding to your Fairino cobot model. Use the path below to access the configuration source files:
+Navigate to the ROS2 plugin repository corresponding to your Fairino cobot model.
 
+In the same directory, make a new folder, this will be the workspace holding the new configuration to integrate moveit with the actual cobot.
 
 ```bash
 cd ~/path/to/plugin/frcobot_ros2
 cd ../
-mkdir configured-fr-ws
+mkdir -p configured-fr-ws/src
 ```
-In the same directory, make a new folder, this will be the workspace holding the new configuration to integrate moveit with the actual cobot.
 
 <p align="center">
   <img src="assets/folder.png" width="600"/>
@@ -39,7 +46,7 @@ In the same directory, make a new folder, this will be the workspace holding the
 
 
 
-Now you can move into the configured-fr-ws and make a src subfolder and then copy the configuration file from the original plugin into the src file 
+Now you can move into the configured-fr-ws/src subfolder and then copy the fairino5_v6_moveit2_config,fairino_description, fairino_hardware_v3_9_5, fairino_msgs  file from the original plugin into the src file 
 
 ```bash
 # Go to the frcobot_ros2 repository
@@ -50,194 +57,147 @@ cd ~/path/to/plugin/frcobot_ros2
 # Copy the MoveIt config package into your configured workspace src folder
 cp -r fairino5_v6_moveit2_config ../configured-fr-ws/src/
 cp -r fairino_description ../configured-fr-ws/src/
-
+cp -r fairino_hardware_v3_9_5 ../configured-fr-ws/src/
+cp -r fairino_msgs ../configured-fr-ws/src/
 ```
 
-Now we move to the configured-fr-ws and build the configuration files.
+
+
+# 3 Overwrite configuration
+
+In this step, we overwrite the default configuration to enable the integration between the Fairino hardware interface and MoveIt2, allowing direct control of the cobot through MoveIt2.
+
+
+### 3.1.1 `fairino5_v6_robot.ros2_control.xacro` Modification
+
+
+Navigate to the following directory:
 
 ```bash
-cd ~/path/to/configured-fr-ws
-
+cd /path/to/ros-plugins/configured-fr-ws/src/fairino5_v6_moveit2_config/config
 ```
+
+Open the following file:
 
 ```bash
-colcon build
-source install/setup.bash
+fairino5_v6_robot.ros2_control.xacro
 ```
 
-inside the same directory we can run the moveit configuration tool by running the following command
+Locate the following line:
 
-```bash
-ros2 launch moveit_setup_assistant setup_assistant.launch.py
-```
-## 2.1 Import your robot model
-
-You will be prompted with moveit setup assisatnat, this tool is essetnaily there to assist you creating the semantic description file or SRDF, yaml configuration, other files.
-
-From the window, choose create new movit configuration package, browse and choose the urdf of your model in this tutorial we will proceed with fairino5_v6.urdf as shown in the screenshot below.
-
-<p align="center">
-  <img src="assets/importURDF.png" width="600"/>
-</p>
-
-
-> **Note:**  
-> make sure you are standing in the same directory that includes the urdf, and double check that you sourced the folder after building, this might make the tool close abrubpty when you exit it.
-
-
-if you managed to properly import the model, you should be able to load the files and you will see the followig model visualized 
-<p align="center">
-  <img src="assets/Moveitimported.png" width="600"/>
-</p>
-
-## 2.2 Generate self-collision matrix 
-In this steps we generate the collision matrix for the cobot, this configuraiton is responsible for disabling the parts that automatically collide with each other for example the first and second joint will be colliding therfore their collision can be disabled.
-
-
-<p align="center">
-  <img src="assets/selfCollisionMatrix.png" width="600"/>
-</p>
-
-## 2.3 Define virtual joint 
-virtual joint allow you to define the cobot with an artifical refrence, this can be useful if the cobot is attached to a mobile robot.
-
-In the Virtual Joint Name set it to:
-```bash
-virtual_joints
-```
-In the Parent Frame Name:
-
-```bash
-world
+```xml
+<plugin>mock_components/GenericSystem</plugin>
 ```
 
-<p align="center">
-  <img src="assets/definevj.png" width="600"/>
-</p>
+Replace it with:
 
-
-## 2.4 Define planning groups
-
-In this step we define the planning group, this include a set of joints into the same group
-
-in the group name you can write 
-
-```bash
-arm
-```
-
-in the kinemtic solver look for kdl_kinemtics_plugin/KDLKineticsPlugin
-
-for the group defaul planner choose TRRT 
-
-finally choose add joints 
-
-
-Then select all the joints and move them to the selected joints, then save 
-
-
-<p align="center">
-  <img src="assets/PlannGroup.png" width="600"/>
-</p>
-
-
-## 2.4 Define Robot Pose
-
-you can make an initial point to to Home, you can leave joints as they are 
-
-<p align="center">
-  <img src="assets/Home.png" width="600"/>
-</p>
-
-
-## 2.4 ros2_control URDF Modifications
-
-In this step we define the command and the state interfaces, keep only the position in both of them checked, then add interfaces.
-
-<p align="center">
-  <img src="assets/ros2_Contro.png" width="600"/>
-</p>
-
-
-## 2.5 Ros 2 Controllers
-
-Auto Add the joints and proceed 
-
-
-<p align="center">
-  <img src="assets/Ros2Controllers.png" width="600"/>
-</p>
-
-
-## 2.6 Moveit Controllers
-
-Auto Add and proceed 
-
-
-<p align="center">
-  <img src="assets/moveitcont.png" width="600"/>
-</p>
-
-
-
-## 2.7 Author infromation
-
-Add the author infomration as shown below, skipping this part might trigger an error later.
-
-<p align="center">
-  <img src="assets/author.png" width="600"/>
-</p>
-
-
-## 2.8 Export the configuraton
-
-In this step, you will have to export the configuration to the workspace 
-
-browse to the configured-fr-ws directory, then choose src/fairino5_v6_moveit2_config
-
-Then you will have to generate the package  and exist the setup assistant.
-<p align="center">
-  <img src="assets/export.png" width="600"/>
-</p>
-
-
-
-## 2.8.1 Overwrite the configuration
-
-at this step, we overwrite the configuraiton, to allow the integration between fairino hardware module and moveit, enabling the user to control the cobot using moveit directly
-
-
-you will have to replace this line 
-
-```bash
- <plugin>mock_components/GenericSystem</plugin>
-```
-with this line 
-```bash 
- <plugin>fairino_hardware/FairinoHardwareInterface</plugin>
+```xml
+<plugin>fairino_hardware/FairinoHardwareInterface</plugin>
 ```
 
 <p align="center">
   <img src="assets/overwrite.png" width="600"/>
 </p>
 
+### 3.1.2 `fairino5_v6_robot.urdf.xacro` Modification
 
+In this step, we modify the `fairino5_v6_robot.urdf.xacro` file to enable the Fairino hardware interface configuration.
 
-
-now you will have to overwrite the moveit_controllers using adding this line betwen type and joints 
+Navigate to the following directory:
 
 ```bash
- action_ns: follow_joint_trajectory
+cd /path/to/ros-plugins/configured-fr-ws/src/fairino5_v6_moveit2_config/config
 ```
 
-<p align="center">
-  <img src="assets/foljt.png" width="600"/>
-</p>
+Open the following file:
 
+```bash
+fairino5_v6_robot.urdf.xacro
+```
 
-Now you will have to rebuild and source everything 
+Locate the following line:
+
+```xml
+<xacro:fairino5_v6_robot_ros2_control name="FakeSystem" initial_positions_file="$(arg initial_positions_file)"/>
+```
+
+Replace it with:
+
+```xml
+<xacro:fairino5_v6_robot_ros2_control name="FairinoHardware" initial_positions_file="$(arg initial_positions_file)"/>
+```
+
+# 4. Build & Source the Workspace
+
+After applying the previous modifications, the workspace can now be built using `colcon`.
+
+First, make sure you are inside the workspace directory:
+
+```bash
+cd ~/path/to/configured-fr-ws
+```
+
+Build the workspace:
 
 ```bash
 colcon build
+```
+
+Then source the workspace environment:
+
+```bash
 source install/setup.bash
+```
+
+Finally, export the Fairino library path:
+
+```bash
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/hadyfarahat/ros-plugins/configured-fr-ws/src/fairino_hardware_v3_9_5/libfairino/lib/
+```
+
+> **Note:**  
+> You will need to source the workspace and export the library path every time before running the demo.  
+> If preferred, these commands can be added to your `.bashrc` file to automate the process.
+# 5. Remove Extra Library Files
+
+Navigate to the following directory:
+
+```bash
+cd ~/path/to/configured-fr-ws/src/fairino_hardware_v3_9_5/libfairino/lib
+```
+
+You should see files similar to the ones shown below:
+
+<p align="center">
+  <img src="assets/lib.png" width="600"/>
+</p>
+
+Delete the following files:
+
+```bash
+rm libfairino.so
+rm libfairino.so.2
+```
+
+Then rename `libfairino.so.2.3.5` to `libfairino.so.2`:
+
+```bash
+mv libfairino.so.2.3.5 libfairino.so.2
+```
+
+> **Important:**  
+> This step is required to prevent MoveIt2 from failing to initialize communication commands with the cobot, otherwise it might utilize the wrong library.
+
+
+## Run MoveIt2
+
+Open a new terminal, navigate to the `configured-fr-ws` workspace, and run the following commands:
+
+```bash
+cd ~/path/to/configured-fr-ws
+
+source install/setup.bash
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/hadyfarahat/ros-plugins/configured-fr-ws/src/fairino_hardware_v3_9_5/libfairino/lib/
+
+ros2 launch fairino5_v6_moveit2_config demo.launch.py
 ```
