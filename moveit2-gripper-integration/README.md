@@ -1,5 +1,7 @@
-# Integrating Gripper with Cobot Model
+# Integrating gripper and robot 
 
+
+In this tutoiral we focus on mergin the 
 In this tutorial we cover how to integrate a gripper to your cobot, in this tutorial we will use the AG Gripper from DH.
 
 

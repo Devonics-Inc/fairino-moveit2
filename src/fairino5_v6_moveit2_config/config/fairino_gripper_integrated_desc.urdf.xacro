@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="fairino_gripper_integrated_desc">
+    <xacro:arg name="initial_positions_file" default="initial_positions.yaml" />
+
+    <!-- Import fairino_gripper_integrated_desc urdf file -->
+    <xacro:include filename="$(find fairino_gripper_integrated_desc)/urdf/integrated.urdf.xacro" />
+
+    <!-- Import control_xacro -->
+    <xacro:include filename="fairino_gripper_integrated_desc.ros2_control.xacro" />
+
+
+    <xacro:fairino_gripper_integrated_desc_ros2_control name="FairinoHardware" initial_positions_file="$(arg initial_positions_file)"/>
+
+</robot>
