@@ -63,7 +63,7 @@ cp -r fairino_msgs ../configured-fr-ws/src/
 
 
 
-# 3 Overwrite configuration
+# 3. Overwrite configuration
 
 In this step, we overwrite the default configuration to enable the integration between the Fairino hardware interface and MoveIt2, allowing direct control of the cobot through MoveIt2.
 
