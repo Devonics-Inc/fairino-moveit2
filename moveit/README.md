@@ -1,14 +1,14 @@
 # Getting Started with the Fairino MoveIt2 Plugin
 
-In this tutorial, we focus on the installation and setup of a basic MoveIt2 environment using the FR5 cobot.
+In this tutorial, we focus on the installation and setup of a basic MoveIt2 environment using the FR5 cobot model.
 
-By the end of this tutorial, you should have a solid understanding of MoveIt2, and how to launch a functional planning environment without integrating a real cobot or simulator.
+By the end of this tutorial, you should have a basic understanding of MoveIt2, and how to launch a functional planning environment without integrating a real cobot or simulator.
 
 <p align="center">
-  <img src="assets/miqs.gif" width="600"/>
+  <img src="../assets/miqs.gif" width="600"/>
 </p>
 
----
+
 
 # 1. Prerequisites
 
@@ -21,7 +21,7 @@ lsb_release -a
 ```
 
 <p align="center">
-  <img src="assets/upre.png" width="600"/>
+  <img src="../assets/upre.png" width="600"/>
 </p>
 
 ---
@@ -35,12 +35,13 @@ echo $ROS_DISTRO
 ```
 
 <p align="center">
-  <img src="assets/rosVersion.png" width="600"/>
+  <img src="../assets/rosVersion.png" width="600"/>
 </p>
 
-If ROS 2 Humble is not installed, you can install it from the official ROS 2 documentation.
+If ROS 2 Humble is not installed, you can install it from the official [ROS 2 documentation](https://docs.ros.org/en/humble/Installation.html).
 
----
+
+
 
 # 2. Installation Steps
 
@@ -65,7 +66,7 @@ ros2 pkg list | grep moveit
 ```
 
 <p align="center">
-  <img src="assets/validateMoveit.png" width="600"/>
+  <img src="../assets/validateMoveit.png" width="600"/>
 </p>
 
 MoveIt2 should now be installed and ready to use.
@@ -99,7 +100,7 @@ source /opt/ros/humble/setup.bash
 ```
 
 <p align="center">
-  <img src="assets/bashscr.png" width="500"/>
+  <img src="../assets/bashscr.png" width="500"/>
 </p>
 
 After updating `.bashrc`, reload it using:
@@ -152,7 +153,7 @@ This will start RViz2 with the Fairino FR5 MoveIt2 configuration and allow you t
 
 
 <p align="center">
-  <img src="assets/moveit2x.png" width="500"/>
+  <img src="../assets/moveit2x.png" width="500"/>
 </p>
 
 

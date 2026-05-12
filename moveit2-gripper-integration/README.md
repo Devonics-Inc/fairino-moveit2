@@ -1,6 +1,6 @@
-# Integrating the Gripper with the Robot
+# Integrating the Gripper with the Robot – Part 1: Merging the URDF
 
-In this tutorial, we will cover how to integrate a gripper using the AG Gripper from DH Robotics.
+In this tutorial, we cover the first step of integrating a gripper with your cobot by merging the robot and gripper models into a single URDF/Xacro file. This unified description is required before generating the MoveIt 2 configuration package.
 
 
 <p align="center">
@@ -21,6 +21,9 @@ To include the gripper in your MoveIt setup, the process mainly consists of two 
 
 1. Create a unified robot description file (URDF) that compines both the robot and the gripper.
 2. Generate a MoveIt configuration package, either manually or using the MoveIt Setup Assistant.
+3. Configure the MoveIt package for integration with the FR collaborative robot.
+
+
 
 
 
