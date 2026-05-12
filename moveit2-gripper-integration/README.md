@@ -3,6 +3,9 @@
 In this tutorial, we will cover how to integrate a gripper using the AG Gripper from DH Robotics.
 
 
+<p align="center">
+  <img src="assets/IntegratedModel.gif" width="600"/>
+</p>
 
 # Requirements
 
