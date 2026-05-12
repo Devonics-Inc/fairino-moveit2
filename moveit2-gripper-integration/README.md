@@ -32,7 +32,7 @@ This workspace will contain the integrated URDF, along with the mesh files for b
 
 ```bash
 cd ~/path/to/fairino/plugin
-# Inside the workspace, create a `src` subfolder.
+# Make frg_gripp_int_ws directory and src subfolder
 mkdir -p frg_gripp_int_ws/src
 ```
 
@@ -74,7 +74,14 @@ You can then delete the remaining files from `dh_ag95_gripper_ros2`, since they 
 rm -rf dh_ag95_gripper_ros2
 
 ```
-## 1.3 Create the Integration Structure
+## 1.3 Copy the Description Package from the Fairino Plugin
+
+```bash
+cp -r ~/ros-plugins/frcobot_ros2/fairino_description .
+```
+This command copies the fairino_description package from the Fairino ROS2 plugin workspace into your current src directory.
+
+## 1.3 Create the Integration package structure
 
 Create the integration structure using the following commands:
 
@@ -92,25 +99,40 @@ After running the commands, the directory structure should look like this:
 ```
 frg_gripp_int_ws/
 └── src/
-    ├── dh_ag95_description
+    ├── fairino_description/
+    ├── dh_ag95_description/
     └── fairino_gripper_integrated_desc/
-        ├── meshes
-        │   ├── gripper
-        │   └── robot
-        ├── urdf
+        ├── meshes/
+        │   ├── gripper/
+        │   └── robot/
+        ├── urdf/
         ├── package.xml
         └── CMakeLists.txt
+
 ```
 
-### 3.1 Copy mesh files
+### 1.3.1 Copy mesh files
 
 Next, copy the required mesh and URDF files into their corresponding folders.
 
-From `/path/to/ros-plugin/frcobot_ros2/fairino_description/fairino5_v6`, copy all `.stl` mesh files into:
+From `/path/to/ros-plugin/frcobot_ros2/fairino_description/fairino5_v6`
+
+<p align="center">
+  <img src="assets/CopyMesh.png" width="600"/>
+</p>
+
+
+copy all `.stl` mesh files into:
 
 ```bash
-fairino_gripper_integrated_desc/meshes/robot
+frg_gripp_int_ws/src/fairino_gripper_integrated_desc/meshes/robot
 ```
+
+
+<p align="center">
+  <img src="assets/RobotFolderImg.png" width="600"/>
+</p>
+
 
 Then repeat the same process for the gripper files by copying:
 Copy the gripper mesh files from:
@@ -119,29 +141,55 @@ Copy the gripper mesh files from:
 /path/to/ros-plugin/frg_gripp_int_ws/src/dh_ag95_description/meshes/visual
 ```
 
+
+<p align="center">
+  <img src="assets/GripperMeshImg.png" width="600"/>
+</p>
+
+
 to:
 
 ```text
 /path/to/ros-plugin/frg_gripp_int_ws/src/fairino_gripper_integrated_desc/meshes/gripper
 ```
 
-### 3.2 Copy URDF Files
+<p align="center">
+  <img src="assets/GripperMeshFIMG.png" width="600"/>
+</p>
+
+
+### 1.3.2 Copy URDF Files
 
 after moving the mesh files you can move the urdf from
 
-From `/path/to/ros-plugin/frcobot_ros2/fairino_description/urdf`, copy `fairino5_v6.urdf`  file into:
+From `/path/to/ros-plugin/frcobot_ros2/fairino_description/urdf`
+
+<p align="center">
+  <img src="assets/urdfFSIMG.png" width="600"/>
+</p>
+
+
+copy `fairino5_v6.urdf`  file into:
 
 ```bash
 fairino_gripper_integrated_desc/urdf
 ```
 
+<p align="center">
+  <img src="assets/urdfMFSImg.png" width="600"/>
+</p>
 
-Then repeat the same process for the gripper files by copying:
-Copy the gripper mesh files from:
+
+
+Then repeat the same process for the gripper files by copying gripper mesh files from:
 
 ```text
 /path/to/ros-plugin/frg_gripp_int_ws/src/dh_ag95_description/urdf
 ```
+<p align="center">
+  <img src="assets/IntgFSImg.png" width="600"/>
+</p>
+
 
 to:
 
@@ -154,7 +202,7 @@ to:
   <img src="assets/Intg.png" width="600"/>
 </p>
 
-## 4. Integration URDF
+## 1.4 Integration URDF
 
 Inside the `urdf` folder, create a new Xacro file:
 
@@ -182,7 +230,58 @@ Then open the file and integrate the gripper with the robot’s `wrist3_link`:
 </robot>
 ```
 
-## 5. Test URDF
+
+## 1.5 Modify the `CMakeLists.txt` & `package.xml` Files
+
+Update the `CMakeLists.txt` file with the following content:
+
+```cmake
+cmake_minimum_required(VERSION 3.8)
+project(fairino_gripper_integrated_desc)
+
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
+
+find_package(ament_cmake REQUIRED)
+
+install(DIRECTORY
+  meshes
+  urdf
+  DESTINATION share/${PROJECT_NAME}
+)
+
+ament_package()
+```
+
+Update the `package.xml` file with the following content:
+
+```xml
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+
+<package format="3">
+  <name>fairino_gripper_integrated_desc</name>
+  <version>0.0.0</version>
+
+  <description>
+    URDF description package for the Fairino integrated gripper
+  </description>
+
+  <maintainer email="user@todo.todo">user</maintainer>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>urdf</exec_depend>
+  <exec_depend>xacro</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
+```
+## 1.6 Test URDF
 
 You can then visualize the setup by using the following command after build
 
@@ -193,14 +292,28 @@ source install/setup.bash
 
 ros2 launch urdf_tutorial display.launch.py model:=$(ros2 pkg prefix fairino_gripper_integrated_desc)/share/fairino_gripper_integrated_desc/urdf/integrated.urdf.xacro
 ```
+<p align="center">
+  <img src="assets/GripperURDFDisImg.png" width="600"/>
+</p>
+
+As shown below, the gripper initially appears to collide with the robot body. To correct this, we can modify the `z` offset value inside the integrated URDF file created earlier.
+
+This adjustment process usually involves some trial and error until the desired alignment is achieved. For example, setting the `z` value in `integrated.urdf` to `0.1` results in the following configuration.
+
+> Note: After modifying the URDF, make sure to rebuild the workspace and source the installation again.
+
+<p align="center">
+  <img src="assets/ModifiedXMLImg.png" width="600"/>
+</p>
+
+After applying the modification, the gripper is properly shifted relative to `wrist3`, as shown below.
 
 <p align="center">
   <img src="assets/Viz.png" width="600"/>
 </p>
 
 
-
-## 6. Import the integrated model into Moveit2
+## 1.6 Import the integrated model into Moveit2
 
 
 ```bash
