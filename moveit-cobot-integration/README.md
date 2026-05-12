@@ -1,10 +1,10 @@
-# Fairino MoveIt2
+# Integrating your fairino cobot with moveit2
 
 This tutorial focuses on the steps required to integrate your Fairino FR collaborative robot with MoveIt2, enabling advanced motion planning, collision avoidance, and safe robot interaction within complex environments.
 
 By following this guide, you will learn how to:
 
-- Configure the Fairino robot for MoveIt2
+- Integrate the Fairino robot for MoveIt2
 - Launch and visualize the robot using RViz2
 - Enable obstacle-aware path planning
 
@@ -15,10 +15,21 @@ This setup provides a flexible framework for developing safe and intelligent rob
   <img src="assets/MoveitAndFR.gif" width="600"/>
 </p>
 
+# Overview
+
+
+The Fairino MoveIt 2 integration utilizes a decoupled, four-tier pipeline to translate high-level Cartesian targets into safe, real-time physical robot motion.
+<p align="center">
+  <img src="assets/FairinoMoveit.png" width="600"/>
+</p>  
+
+The core computational heavy lifting, including inverse kinematics (IK), dynamic collision avoidance, and trajectory planning—is managed entirely by **MoveIt**. Once a safe path is calculated, MoveIt dispatches the structured trajectory waypoints to the designated **ROS 2 Arm Controller** (`JointTrajectoryController`). 
+
+This controller is responsible for deterministically sequencing and interpolating these waypoints into a high-frequency, real-time command stream. These continuous commands are then fed directly into the **Fairino Hardware Interface**, which translates and executes the joint profiles natively across the physical **Fairino Cobot**.
 
 # 1. Prerequisites
 
-Before starting this tutorial, make sure you have successfully completed the **Getting Started with the Fairino MoveIt2 Plugin** tutorial.
+Before starting this tutorial, make sure you have successfully completed the `Getting Started with the Fairino MoveIt2 Plugin` tutorial.
 
 You can still follow this guide without completing the previous tutorial, but you will need to manually clone the Fairino ROS2 repository using the following command:
 
@@ -46,7 +57,7 @@ mkdir -p configured-fr-ws/src
 
 
 
-Now you can move into the configured-fr-ws/src subfolder and then copy the fairino5_v6_moveit2_config,fairino_description, fairino_hardware_v3_9_5, fairino_msgs  file from the original plugin into the src file 
+Now you can move into the configured-fr-ws/src subfolder and then copy the fairino5_v6_moveit2_config,fairino_description, fairino_hardware_v3_9_5, fairino_msgs  file from the original plugin into the src subfolder 
 
 ```bash
 # Go to the frcobot_ros2 repository
