@@ -1,12 +1,8 @@
-# Integrating gripper and robot 
+# Integrating the Gripper with the Robot
+
+In this tutorial, we will cover how to integrate a gripper using the AG Gripper from DH Robotics.
 
 
-In this tutoiral we focus on mergin the 
-In this tutorial we cover how to integrate a gripper to your cobot, in this tutorial we will use the AG Gripper from DH.
-
-
-
----
 
 # Requirements
 
@@ -14,16 +10,31 @@ Before starting, make sure you have the following installed:
 
 1) Ubuntu 22.04.5 LTS  
 2) ROS 2 Humble  
-3) Moveit2 with Fairino plugin ready to use.
+3) Fairino Moveit2 plugin
 
----
+# Overview
 
-# Installation Steps
-## 1. Create the Workspace
+To include the gripper in your MoveIt setup, the process mainly consists of two steps:
 
-Before starting this tutorial, create a new workspace named `frg_gripp_int_ws` as shown in the screenshot below.
+1. Create a unified robot description file (URDF) that compines both the robot and the gripper.
+2. Generate a MoveIt configuration package, either manually or using the MoveIt Setup Assistant.
 
-Inside the workspace, create a `src` subfolder.
+
+
+
+## 1. Create the URDF for the Gripper & Cobot
+
+### 1.1 Create the Workspace
+
+Before starting this tutorial, create a new workspace named `frg_gripp_int_ws`, as shown in the screenshot below.
+This workspace will contain the integrated URDF, along with the mesh files for both the gripper and the cobot.
+
+
+```bash
+cd ~/path/to/fairino/plugin
+# Inside the workspace, create a `src` subfolder.
+mkdir -p frg_gripp_int_ws/src
+```
 
 <p align="center">
   <img src="assets/mkdir.png" width="600"/>
@@ -32,13 +43,14 @@ Inside the workspace, create a `src` subfolder.
 
 
 
-## 2. Clone the Gripper Repository
+
+## 1.2 Clone the Gripper Repository
 
 We recommend contacting the gripper manufacturer to obtain the required URDF and mesh files.  
 In this tutorial, we will use the AG Gripper from DH Robotics.
 
 ```bash
-cd ~/path/to/ros-plugins/frg_gripp_int_ws/src
+cd frg_gripp_int_ws/src
 git clone https://github.com/ian-chuang/dh_ag95_gripper_ros2.git
 
 ```
@@ -46,9 +58,8 @@ git clone https://github.com/ian-chuang/dh_ag95_gripper_ros2.git
 After cloning the repository, copy the required folder directly into the src directory as shown in the screenshot below.
 
 ```bash
-cd ~/path/to/ros-plugins/frg_gripp_int_ws/src
-cp -r dh_ag95_gripper_ros2/dh_ag95_description
-
+# copy description files from the inside the ros2 folder
+cp -r dh_ag95_gripper_ros2/dh_ag95_description .
 ```
 
 <p align="center">
@@ -63,42 +74,32 @@ You can then delete the remaining files from `dh_ag95_gripper_ros2`, since they 
 rm -rf dh_ag95_gripper_ros2
 
 ```
+## 1.3 Create the Integration Structure
 
-
-## 3. Copy moveit plugin files
-
-Now go to the rest of the cobot model files and copy them   
+Create the integration structure using the following commands:
 
 ```bash
-# Go to the frcobot_ros2 plugin repository
-cd ~/path/to/plugin/frcobot_ros2
-```
+# ensure you are inside frg_gripp_int_ws
+cd frg_gripp_int_ws/src
 
-```bash
-# Copy the MoveIt config package into your configured workspace src folder
-cp -r fairino5_v6_moveit2_config ../frg_gripp_int_ws/src/
-cp -r fairino_description ../frg_gripp_int_ws/src/
-cp -r fairino_hardware_v3_9_5 ../frg_gripp_int_ws/src/
-cp -r fairino_msgs ../frg_gripp_int_ws/src/
-```
-## 3. Create the Integration Package Structure
-
-Create the integration package structure using the following commands:
-
-```bash
-cd ~/path/to/plugin/frg_gripp_int_ws/src
 mkdir -p fairino_gripper_integrated_desc/meshes/{gripper,robot}
 mkdir -p fairino_gripper_integrated_desc/urdf
+touch fairino_gripper_integrated_desc/package.xml
+touch fairino_gripper_integrated_desc/CMakeLists.txt
 ```
 
 After running the commands, the directory structure should look like this:
-
-```text
-fairino_gripper_integrated_desc/
-├── meshes
-│   ├── gripper
-│   └── robot
-└── urdf
+```
+frg_gripp_int_ws/
+└── src/
+    ├── dh_ag95_description
+    └── fairino_gripper_integrated_desc/
+        ├── meshes
+        │   ├── gripper
+        │   └── robot
+        ├── urdf
+        ├── package.xml
+        └── CMakeLists.txt
 ```
 
 ### 3.1 Copy mesh files
@@ -108,7 +109,7 @@ Next, copy the required mesh and URDF files into their corresponding folders.
 From `/path/to/ros-plugin/frcobot_ros2/fairino_description/fairino5_v6`, copy all `.stl` mesh files into:
 
 ```bash
-fairino_gripper_integrated_desc/meshes
+fairino_gripper_integrated_desc/meshes/robot
 ```
 
 Then repeat the same process for the gripper files by copying:
@@ -175,7 +176,7 @@ Then open the file and integrate the gripper with the robot’s `wrist3_link`:
 
   <!-- Attach gripper to wrist link, you might need to change the offset of the gripper if needed  -->
   <xacro:dh_ag95_gripper parent="wrist3_link" prefix="gripper_">
-    <origin xyz="0 0 0." rpy="0 0 0.05" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
   </xacro:dh_ag95_gripper>
 
 </robot>
