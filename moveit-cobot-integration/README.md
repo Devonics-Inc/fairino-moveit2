@@ -12,7 +12,7 @@ This setup provides a flexible framework for developing safe and intelligent rob
 
 
 <p align="center">
-  <img src="assets/MoveitAndFR.gif" width="600"/>
+  <img src="../assets/MoveitAndFR.gif" width="600"/>
 </p>
 
 # Overview
@@ -20,7 +20,7 @@ This setup provides a flexible framework for developing safe and intelligent rob
 
 The Fairino MoveIt 2 integration utilizes a decoupled, four-tier pipeline to translate high-level Cartesian targets into safe, real-time physical robot motion.
 <p align="center">
-  <img src="assets/FairinoMoveit.png" width="600"/>
+  <img src="../assets/FairinoMoveit.png" width="600"/>
 </p>  
 
 The core computational heavy lifting, including inverse kinematics (IK), dynamic collision avoidance, and trajectory planning—is managed entirely by **MoveIt**. Once a safe path is calculated, MoveIt dispatches the structured trajectory waypoints to the designated **ROS 2 Arm Controller** (`JointTrajectoryController`). 
@@ -52,7 +52,7 @@ mkdir -p configured-fr-ws/src
 ```
 
 <p align="center">
-  <img src="assets/folder.png" width="600"/>
+  <img src="../assets/folder.png" width="600"/>
 </p>
 
 
@@ -107,7 +107,7 @@ Replace it with:
 ```
 
 <p align="center">
-  <img src="assets/overwrite.png" width="600"/>
+  <img src="../assets/overwrite.png" width="600"/>
 </p>
 
 ### 3.1.2 `fairino5_v6_robot.urdf.xacro` Modification
@@ -180,7 +180,7 @@ cd ~/path/to/configured-fr-ws/src/fairino_hardware_v3_9_5/libfairino/lib
 You should see files similar to the ones shown below:
 
 <p align="center">
-  <img src="assets/lib.png" width="600"/>
+  <img src="../assets/lib.png" width="600"/>
 </p>
 
 Delete the following files:

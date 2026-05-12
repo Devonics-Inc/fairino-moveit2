@@ -4,7 +4,7 @@ In this tutorial, we will cover how to integrate a gripper using the AG Gripper 
 
 
 <p align="center">
-  <img src="assets/IntegratedModel.gif" width="600"/>
+  <img src="../assets/IntegratedModel.gif" width="600"/>
 </p>
 
 # Requirements
@@ -40,7 +40,7 @@ mkdir -p frg_gripp_int_ws/src
 ```
 
 <p align="center">
-  <img src="assets/mkdir.png" width="600"/>
+  <img src="../assets/mkdir.png" width="600"/>
 </p>
 
 
@@ -66,7 +66,7 @@ cp -r dh_ag95_gripper_ros2/dh_ag95_description .
 ```
 
 <p align="center">
-  <img src="assets/GMove.png" width="600"/>
+  <img src="../assets/GMove.png" width="600"/>
 </p>
 
 
@@ -121,7 +121,7 @@ Next, copy the required mesh and URDF files into their corresponding folders.
 From `/path/to/ros-plugin/frcobot_ros2/fairino_description/fairino5_v6`
 
 <p align="center">
-  <img src="assets/CopyMesh.png" width="600"/>
+  <img src="../assets/CopyMesh.png" width="600"/>
 </p>
 
 
@@ -133,7 +133,7 @@ frg_gripp_int_ws/src/fairino_gripper_integrated_desc/meshes/robot
 
 
 <p align="center">
-  <img src="assets/RobotFolderImg.png" width="600"/>
+  <img src="../assets/RobotFolderImg.png" width="600"/>
 </p>
 
 
@@ -146,7 +146,7 @@ Copy the gripper mesh files from:
 
 
 <p align="center">
-  <img src="assets/GripperMeshImg.png" width="600"/>
+  <img src="../assets/GripperMeshImg.png" width="600"/>
 </p>
 
 
@@ -157,7 +157,7 @@ to:
 ```
 
 <p align="center">
-  <img src="assets/GripperMeshFIMG.png" width="600"/>
+  <img src="../assets/GripperMeshFIMG.png" width="600"/>
 </p>
 
 
@@ -168,7 +168,7 @@ after moving the mesh files you can move the urdf from
 From `/path/to/ros-plugin/frcobot_ros2/fairino_description/urdf`
 
 <p align="center">
-  <img src="assets/urdfFSIMG.png" width="600"/>
+  <img src="../assets/urdfFSIMG.png" width="600"/>
 </p>
 
 
@@ -179,7 +179,7 @@ fairino_gripper_integrated_desc/urdf
 ```
 
 <p align="center">
-  <img src="assets/urdfMFSImg.png" width="600"/>
+  <img src="../assets/urdfMFSImg.png" width="600"/>
 </p>
 
 
@@ -190,7 +190,7 @@ Then repeat the same process for the gripper files by copying gripper mesh files
 /path/to/ros-plugin/frg_gripp_int_ws/src/dh_ag95_description/urdf
 ```
 <p align="center">
-  <img src="assets/IntgFSImg.png" width="600"/>
+  <img src="../assets/IntgFSImg.png" width="600"/>
 </p>
 
 
@@ -202,7 +202,7 @@ to:
 
 
 <p align="center">
-  <img src="assets/Intg.png" width="600"/>
+  <img src="../assets/Intg.png" width="600"/>
 </p>
 
 ## 1.4 Integration URDF
@@ -296,7 +296,7 @@ source install/setup.bash
 ros2 launch urdf_tutorial display.launch.py model:=$(ros2 pkg prefix fairino_gripper_integrated_desc)/share/fairino_gripper_integrated_desc/urdf/integrated.urdf.xacro
 ```
 <p align="center">
-  <img src="assets/GripperURDFDisImg.png" width="600"/>
+  <img src="../assets/GripperURDFDisImg.png" width="600"/>
 </p>
 
 As shown below, the gripper initially appears to collide with the robot body. To correct this, we can modify the `z` offset value inside the integrated URDF file created earlier.
@@ -306,13 +306,13 @@ This adjustment process usually involves some trial and error until the desired 
 > Note: After modifying the URDF, make sure to rebuild the workspace and source the installation again.
 
 <p align="center">
-  <img src="assets/ModifiedXMLImg.png" width="600"/>
+  <img src="../assets/ModifiedXMLImg.png" width="600"/>
 </p>
 
 After applying the modification, the gripper is properly shifted relative to `wrist3`, as shown below.
 
 <p align="center">
-  <img src="assets/Viz.png" width="600"/>
+  <img src="../assets/Viz.png" width="600"/>
 </p>
 
 
