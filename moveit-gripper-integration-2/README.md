@@ -2,6 +2,11 @@
 
 This tutorial builds on Part 1, where we created the integrated URDF. In this section, we generate the MoveIt 2 configuration package using the integrated robot model.
 
+
+<p align="center">
+  <img src="../assets/moveitWithGripper2.gif" width="600"/>
+</p>
+
 # Requirements
 
 Before starting, make sure you have the following installed:
@@ -132,7 +137,7 @@ you can add the author information, skipping this might trigger errors
 </p>
 
 
-## 2.6 Export configuration infromation
+## 2.6 Export configuration
 
 choose the old configuration package and export to it the new configuraiton, the files with red names indicates a change in these files 
 

@@ -171,29 +171,18 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/hadyfarahat/ros-plugins/configured
 > If preferred, these commands can be added to your `.bashrc` file to automate the process.
 # 5. Remove Extra Library Files
 
-Navigate to the following directory:
+move the library to shared libs, this will allow you to avoid export the library path every time you want to use the 
 
 ```bash
-cd ~/path/to/configured-fr-ws/src/fairino_hardware_v3_9_5/libfairino/lib
-```
+cd ~/ros-plugins/frg_gripp_int_ws/install/fairino_hardware_v3_9_5/lib/
 
-You should see files similar to the ones shown below:
+# 2. Copy the .so files to the system library folder
+sudo cp libfairino.so.2 /usr/local/lib/
 
-<p align="center">
-  <img src="../assets/lib.png" width="600"/>
-</p>
 
-Delete the following files:
+# change the name of the libarary to so.2, moveit looks for this name
+sudo ln -s /usr/local/lib/libfairino.so.2.3.5 /usr/local/lib/libfairino.so.2
 
-```bash
-rm libfairino.so
-rm libfairino.so.2
-```
-
-Then rename `libfairino.so.2.3.5` to `libfairino.so.2`:
-
-```bash
-mv libfairino.so.2.3.5 libfairino.so.2
 ```
 
 > **Important:**  
@@ -208,7 +197,8 @@ Open a new terminal, navigate to the `configured-fr-ws` workspace, and run the f
 cd ~/path/to/configured-fr-ws
 
 source install/setup.bash
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/hadyfarahat/ros-plugins/configured-fr-ws/src/fairino_hardware_v3_9_5/libfairino/lib/
 
 ros2 launch fairino5_v6_moveit2_config demo.launch.py
 ```
+
+
