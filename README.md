@@ -1,8 +1,6 @@
 # Fairino MoveIt2 
 
-This repository contains multiple standalone tutorials demonstrating how to integrate grippers with Fairino collaborative robots using MoveIt2.
-
-The project is organized into separate tutorials so each integration workflow can be followed independently depending on your application requirements.
+This repository provides a comprehensive, step-by-step workflow for integrating **Fairino Collaborative Robots** with **MoveIt2**, covering everything from initial simulation to real-world hardware deployment and gripper integration.
 
 <table>
   <tr>
@@ -13,79 +11,28 @@ The project is organized into separate tutorials so each integration workflow ca
   </tr>
 </table>
 
-
 # Tutorials Overview
 
-## 1. moveit/
+## 1. MoveIt2 Base Setup (`moveit/`)
+This directory contains the foundation for the environment.
+* **Includes**: ROS 2 Humble environment verification, MoveIt2 installation, and building core Fairino packages (`fairino_description`, `fairino_msgs`).
+* **Outcome**: A functional RViz2 demo using mock components for offline motion planning.
 
-This directory contains the base MoveIt2 setup and configuration examples for Fairino robots.
+## 2. Real Robot Integration (`moveit-cobot-integration/`)
+This section focuses on the transition from a "mock" system to a physical robot.
+* **Includes**: Overwriting `ros2_control` Xacro files to use the `FairinoHardwareInterface` and configuring system libraries (`libfairino.so.2`).
+* **Outcome**: Direct communication between MoveIt2 and the physical Fairino controller.
 
-### Includes
-
-- Basic MoveIt2 workspace setup
-- Motion planning examples
-- Visualization using RViz2
-- Fundamental robot configuration files
-- Initial MoveIt integration workflow
-
-### Recommended For
-
-- Users starting with MoveIt2 for the first time
-- Testing robot motion planning before adding peripherals
-- Learning the base architecture of MoveIt2 integration
-
----
-
-## 2. moveit2-gripper-integration/
-
-This tutorial demonstrates how to integrate a gripper into an existing Fairino MoveIt2 environment.
-
-### Includes
-
-- Gripper URDF integration
-- Robot description updates
-- Joint and controller configuration
-- MoveIt2 planning group updates
-- Recompilation and launch process
-- End-effector visualization and planning
-
-### Recommended For
-
-- Users adding a gripper to an existing MoveIt2 setup
-- Applications requiring pick-and-place operations
-- End-effector motion planning and simulation
-
----
-
-## 3. moveit-cobot-integration/
-
-This directory focuses on the full collaborative robot integration workflow.
-
-### Includes
-
-- Cobot-specific MoveIt2 configuration
-- Robot communication setup
-- Launch configurations
-- Full robot planning pipeline
-- Integration structure for real robot deployment
-
-### Recommended For
-
-- Full cobot deployments
-- Real robot integration workflows
-- Advanced motion planning scenarios
-
----
+## 3. Gripper Integration (`moveit2-gripper-integration/`)
+This multi-part tutorial demonstrates how to add a DH Robotics AG95 gripper to your setup.
+* **Includes**: Merging URDF/Xacro models, generating planning groups for the end-effector, and configuring hybrid controllers to manage both the real arm and the gripper.
+* **Outcome**: A fully integrated system capable of advanced pick-and-place operations.
 
 # Recommended Learning Path
 
-If you are new to the project, it is recommended to follow the tutorials in this order:
+It is recommended to follow the tutorials in this specific order:
 
-1. `moveit/`
-2. `moveit-cobot-integration/`
-3. `moveit2-gripper-integration/`
-
-This progression helps establish the base MoveIt2 environment before introducing full cobot and gripper integrations.
-
----
+1.  **`moveit/`**: Establish your base workspace and ensure MoveIt2 is planning correctly in simulation.
+2.  **`moveit-cobot-integration/`**: Connect to your physical Fairino robot. Verify that the "real" hardware interface is responding to MoveIt commands before adding peripherals.
+3.  **`moveit2-gripper-integration/`**: Once the arm is moving safely, follow the guide to merge the gripper URDF, update planning groups, and finalize the hybrid control configuration.
 
