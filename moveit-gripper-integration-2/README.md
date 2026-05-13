@@ -51,6 +51,8 @@ colcon build
 
 source install/setup.bash
 
+export QT_QPA_PLATFORM=xcb
+
 ros2 launch moveit_setup_assistant setup_assistant.launch.py
 
 ```
@@ -70,6 +72,17 @@ You will be prompted with the import options. Choose the integrated URDF created
 > If the loading process fails, it is usually due to one of the following reasons:
 > - The workspace was not sourced after building.  
 > - The URDF is located in a different workspace from the one you built or sourced.
+
+While importing the urdf, you might fail, this is normally an error related to the directx verions, you can enforce a specific version suing this command and repeat 
+
+```bash
+export QT_QPA_PLATFORM=xcb
+
+source install/setup.bash
+
+ros2 launch moveit_setup_assistant setup_assistant.launch.py
+
+```
 
 
 ## 2.2 Define self-collision 
@@ -96,23 +109,33 @@ Select joints 1 to 6 and add them to the planning group.
   <img src="../assets/planIMG2.png" width="600"/>
 </p>
 
-
-## 2.3 Define Planning Groups
-ros2_control urdf modifciation, make sure that you uncheck the position and then click on **add interfaces**, this is important to interface weith ros2_control 
-
+Next, we need to create a separate planning group for the gripper. This is necessary because the gripper will use a different hardware interface and controller setup from the robot arm.
+<p align="center">
+  <img src="../assets/planIMG3.png" width="600"/>
+</p>
+Select the gripper joint as shown in the screenshot, then add it to the newly created planning group.
 
 <p align="center">
-  <img src="../assets/ros2ContIMG.png" width="600"/>
+  <img src="../assets/planIMG4.png" width="600"/>
 </p>
+
+## 2.3 Modify ros2_control urdf
+ros2_control urdf modifciation, make sure that you uncheck the position and then click on **add interfaces**, this is important to interface weith ros2_control 
+
+<p align="center">
+  <img src="../assets/IntSet.png" width="600"/>
+</p>
+
+
 
 ## 2.4 Define ROS 2 Controllers 
 
 Auto Add Joint TrajectoryController for the planning groups
 
-
 <p align="center">
-  <img src="../assets/ros2Cont.png" width="600"/>
+  <img src="../assets/ros2ContIMG.png" width="600"/>
 </p>
+
 
 
 ## 2.5 Define ROS Moveit Controllers  
@@ -121,9 +144,8 @@ Auto Add FollowJointsTrajectory Controllers for each planning group
 
 
 <p align="center">
-  <img src="../assets/ROSMoveitControllers.png" width="600"/>
+  <img src="../assets/ros2Cont.png" width="600"/>
 </p>
-
 
 
 
@@ -150,7 +172,7 @@ choose the old configuration package and export to it the new configuraiton, the
 
 
 <p align="center">
-  <img src="../assets/exportConfig2.png" width="600"/>
+  <img src="../assets/ExportConfig.png" width="600"/>
 </p>
 
 

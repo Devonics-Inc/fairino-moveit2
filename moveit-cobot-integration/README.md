@@ -169,7 +169,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/hadyfarahat/ros-plugins/configured
 > **Note:**  
 > You will need to source the workspace and export the library path every time before running the demo.  
 > If preferred, these commands can be added to your `.bashrc` file to automate the process.
-# 5. Remove Extra Library Files
+# 5. Add dynamic library to shared libs
 
 move the library to shared libs, this will allow you to avoid export the library path every time you want to use the 
 

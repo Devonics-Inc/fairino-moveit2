@@ -326,6 +326,9 @@ After applying the modification, the gripper is properly shifted relative to `wr
 
 source install/setup.bash
 
+# enforce directX 
+export QT_QPA_PLATFORM=xcb
+
 ros2 launch moveit_setup_assistant setup_assistant.launch.py
 
 ```
