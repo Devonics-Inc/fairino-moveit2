@@ -10,6 +10,8 @@ This repository provides a comprehensive, step-by-step workflow for integrating 
 
   </tr>
 </table>
+MoveIt 2 is a motion planning framework built on top of ROS2 that adds advanced robotic capabilities such as trajectory planning, collision avoidance, kinematics solving, scene awareness, and motion execution. Instead of manually controlling each robot joint, MoveIt2 allows users to define target positions or poses while the framework automatically computes safe and optimized robot motions. It also provides powerful visualization and interaction tools through RViz, making it easier to simulate, validate, and debug robotic applications before deploying them to a real cobot.
+
 
 # Tutorials Overview
 
