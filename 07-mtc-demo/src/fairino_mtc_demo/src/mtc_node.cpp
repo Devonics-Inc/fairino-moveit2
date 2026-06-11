@@ -390,7 +390,6 @@ int main(int argc, char** argv) {
   // Pass our modified options into the task node constructor
   auto mtc_task_node = std::make_shared<MTCTaskNode>(options);
   
-  // 🟢 FIX: Spin the node in a background thread so the action client can work
   rclcpp::executors::MultiThreadedExecutor executor;
   auto spin_thread = std::thread([&executor, mtc_task_node]() {
     executor.add_node(mtc_task_node->get_node_base_interface());
@@ -402,7 +401,6 @@ int main(int argc, char** argv) {
   mtc_task_node->setupPlanningScene();
   mtc_task_node->doTask();
   
-  // 🟢 FIX: Cleanly stop the executor and join the thread before shutting down
   executor.cancel();
   if (spin_thread.joinable()) {
     spin_thread.join();
